@@ -8,8 +8,9 @@ Usando docker para fazer com que systema rode em qualquer systema operacional se
 
 [Instalar o docker](https://docs.docker.com/install/)
 
-####Build docker 
-sudo docker-compose build
+#### Build docker 
+
+docker-compose build
 
 ### Travis-CI
 Travis-CI para não deixaro systema ser upado para o git se ouver erros
