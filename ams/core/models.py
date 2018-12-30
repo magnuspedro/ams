@@ -37,7 +37,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     cpf = models.CharField(max_length=15, unique=True)
     rg = models.CharField(max_length=15)
     phone = models.CharField(max_length=15)
-    course = models.CharField(max_length=10)
+    course = models.CharField(max_length=30)
     is_partner = models.BooleanField(default=False)
     sex = models.CharField(max_length=1)
     date_of_birth = models.DateField()
