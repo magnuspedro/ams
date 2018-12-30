@@ -24,12 +24,12 @@ O sistema está na porta 8000, quando acessar use localhost:8000
 
 The application port is 8000, always remember to go to localhost:8000 to access the application
 
-###Tests
+### Tests
 
 To run the tests use:
 docker-compose run --rm ams sh -c "python manage.py test && flake8"
 
-###Application
+### Application
 
 To run the application use:
 docker-compose up
