@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
 
+# from django.conf import settings
+
 
 class UserManager(BaseUserManager):
 
@@ -49,3 +51,33 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['cpf', 'date_of_birth']
+
+    def __str__(self):
+        return self.name
+
+
+class Team(models.Model):
+    """Create and save new team"""
+    users = models.ManyToManyField('User')
+    modalities = models.ManyToManyField('Modality')
+
+
+class Modality(models.Model):
+    """Create and save new modality"""
+    name = models.CharField(max_length=255)
+    sex = models.CharField(max_length=1)
+    fee = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return self.name
+
+
+class Event(models.Model):
+    """Create and save Event"""
+    name = models.CharField(max_length=255)
+    start = models.DateField()
+    end = models.DateField()
+    price = models.FloatField()
+
+    def __str__(self):
+        return self.name
