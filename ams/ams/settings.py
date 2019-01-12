@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'user',
     'modality',
     'event',
+    'product',
 ]
 
 MIDDLEWARE = [

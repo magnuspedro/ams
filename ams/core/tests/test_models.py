@@ -116,3 +116,49 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(event), event.name)
+
+    def test_product_str(self):
+        """Test the product string representation"""
+        event = models.Event.objects.create(
+            name='JOIA',
+            start='2018-10-10',
+            end='2018-11-11',
+            price=10.00,
+        )
+        product = models.Product.objects.create(
+            name='Boné',
+            description='É um boné porra',
+            amount=10,
+            size='Unico',
+            color='Vermelho',
+            event=event,
+            price=20.00,
+        )
+
+        self.assertEqual(str(product), product.name)
+
+    def test_bought_str(self):
+        """Test the bought string representation"""
+        event = models.Event.objects.create(
+            name='JOIA',
+            start='2018-10-10',
+            end='2018-11-11',
+            price=10.00,
+        )
+        product = models.Product.objects.create(
+            name='Boné',
+            description='É um boné porra',
+            amount=10,
+            size='Unico',
+            color='Vermelho',
+            event=event,
+            price=20.00,
+
+        )
+
+        bought = models.Bought.objects.create(
+            price='10.00',
+            product=product,
+        )
+
+        self.assertEqual(str(bought), bought.price)

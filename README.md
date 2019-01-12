@@ -20,6 +20,14 @@ A metodologia se baseia em criar testes antes de criar o codigo para ter mais co
 
 ## RUN
 
+### Create admin
+
+To create a admin use the command
+
+docker-compose run --rm ams sh -c "python manage.py createsuperuser"
+
+
+
 O sistema está na porta 8000, quando acessar use localhost:8000
 
 The application port is 8000, always remember to go to localhost:8000 to access the application

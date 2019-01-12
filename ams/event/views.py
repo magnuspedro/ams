@@ -2,7 +2,7 @@ from rest_framework import viewsets, mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import Event
+from core.models import Event, Competition
 
 from event import serializers
 
@@ -24,6 +24,31 @@ class EventViewSet(viewsets.GenericViewSet,
         """Retrun appropriated serializer class"""
         if self.action == 'retrieve':
             return serializers.EventSerializer
+
+        return self.serializer_class
+
+    def perform_create(self, serializer):
+        """Create a new event"""
+        serializer.save()
+
+
+class CompetitionViewSet(viewsets.GenericViewSet,
+                         mixins.ListModelMixin,
+                         mixins.CreateModelMixin):
+    """Manage Competition in the database"""
+    serializer_class = serializers.CompetitionSerializer
+    queryset = Competition.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        """Retrive the event for the authenticated user"""
+        return self.queryset.all()
+
+    def get_serializer_class(self):
+        """Retrun appropriated serializer class"""
+        if self.action == 'retrieve':
+            return serializers.CompetitionSerializer
 
         return self.serializer_class
 

@@ -1,13 +1,15 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from event import views
+from product import views
+
 
 router = DefaultRouter()
-router.register('events', views.EventViewSet)
-router.register('competition', views.CompetitionViewSet)
+router.register('products', views.ProductViewSet)
+router.register('bought', views.BoughtViewSet)
 
-app_name = 'event'
+
+app_name = 'product'
 
 urlpatterns = [
     path('', include(router.urls))

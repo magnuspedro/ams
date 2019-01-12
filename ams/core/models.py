@@ -81,3 +81,32 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Competition(models.Model):
+    """Create and save Competition"""
+    events = models.ManyToManyField('Event')
+    modalities = models.ManyToManyField('Modality')
+
+
+class Product(models.Model):
+    """Create and save Products"""
+    name = models.CharField(max_length=140)
+    description = models.CharField(max_length=280)
+    amount = models.IntegerField()
+    size = models.CharField(max_length=50)
+    color = models.CharField(max_length=140)
+    event = models.ForeignKey('Event', on_delete=models.CASCADE,)
+    price = models.FloatField()
+
+    def __str__(self):
+        return self.name
+
+
+class Bought(models.Model):
+    """Create and save Bought"""
+    price = models.FloatField()
+    product = models.ForeignKey('Product', on_delete=models.CASCADE,)
+
+    def __str__(self):
+        return self.price
