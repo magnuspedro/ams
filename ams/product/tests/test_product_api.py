@@ -9,7 +9,6 @@ from core.models import Product, Event
 
 from product.serializers import ProductSerializer
 
-import sys
 
 PRODUCT_URL = reverse('product:product-list')
 
