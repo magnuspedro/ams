@@ -3,19 +3,31 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
+from core.models import Modality, User
+
+from modality.serializers import ModalitySerializer
+
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the users object"""
+    modalities = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Modality.objects.all()
+    )
 
     class Meta:
         model = get_user_model()
         fields = ('email', 'password', 'name', 'cpf', 'rg', 'course', 'phone',
-                  'sex', 'date_of_birth')
+                  'sex', 'date_of_birth', 'modalities')
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
     def create(self, validated_data):
         """Create a new user with encrypted password and return it"""
-        return get_user_model().objects.create_user(**validated_data)
+        modalities = validated_data.pop('modalities')
+        user = get_user_model().objects.create_user(**validated_data)
+        for modality in modalities:
+            user.modalities.add(modality)
+        return user
 
     def update(self, instance, validated_data):
         """Update a user, setting the password correctly and return it"""
@@ -27,6 +39,10 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+
+class UserDetailSerializer(UserSerializer):
+    modalities = ModalitySerializer(many=True, read_only=True)
 
 
 class AuthTokenSerializer(serializers.Serializer):
@@ -42,12 +58,15 @@ class AuthTokenSerializer(serializers.Serializer):
         email = attrs.get('email')
         password = attrs.get('password')
 
+        is_staff = User.objects.values('is_staff').get(email=email)
+
         user = authenticate(
             request=self.context.get('request'),
             username=email,
             password=password,
         )
-        if not user:
+
+        if not user or not is_staff['is_staff']:
             msg = _('Unable to authenticate with provided credentials')
             raise serializers.ValidationError(msg, code='authorization')
 

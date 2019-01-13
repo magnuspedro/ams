@@ -46,6 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     post = models.CharField(max_length=255)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    modalities = models.ManyToManyField('Modality')
 
     objects = UserManager()
 
@@ -56,10 +57,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.name
 
 
-class Team(models.Model):
-    """Create and save new team"""
-    users = models.ManyToManyField('User')
-    modalities = models.ManyToManyField('Modality')
+# class Team(models.Model):
+#     """Create and save new team"""
+#     users = models.ManyToManyField('User')
+#     modalities = models.ManyToManyField('Modality')
 
 
 class Modality(models.Model):
@@ -78,15 +79,16 @@ class Event(models.Model):
     start = models.DateField()
     end = models.DateField()
     price = models.FloatField()
+    modalities = models.ManyToManyField('Modality')
 
     def __str__(self):
         return self.name
 
 
-class Competition(models.Model):
-    """Create and save Competition"""
-    events = models.ManyToManyField('Event')
-    modalities = models.ManyToManyField('Modality')
+# class Competition(models.Model):
+#     """Create and save Competition"""
+#     events = models.ManyToManyField('Event')
+#     modalities = models.ManyToManyField('Modality')
 
 
 class Product(models.Model):

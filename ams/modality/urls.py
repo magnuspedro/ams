@@ -6,7 +6,6 @@ from modality import views
 
 router = DefaultRouter()
 router.register('modalities', views.ModalityViewSet)
-router.register('teams', views.TeamViewSet)
 
 app_name = 'modality'
 

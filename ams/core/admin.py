@@ -33,8 +33,6 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.Modality)
-admin.site.register(models.Team)
 admin.site.register(models.Event)
-admin.site.register(models.Competition)
 admin.site.register(models.Product)
 admin.site.register(models.Bought)

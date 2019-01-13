@@ -1,8 +1,36 @@
-from rest_framework import generics, authentication, permissions
+from rest_framework import generics, authentication, permissions,\
+    viewsets, mixins
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 
-from user.serializers import UserSerializer, AuthTokenSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
+from core.models import User
+
+from user.serializers import UserSerializer, AuthTokenSerializer,\
+    UserDetailSerializer
+
+from user import serializers
+
+
+class UserViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    """Mange product in the database"""
+    serializer_class = serializers.UserDetailSerializer
+    queryset = User.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        """Retrie the product for the authenticade user"""
+        return self.queryset.all()
+
+    def get_serializer_class(self):
+        """Return appropriate serializer class"""
+        if self.action == 'retrieve':
+            return serializers.UserDetailSerializer
+
+        return self.serializer_class
 
 
 class CreateUserView(generics.CreateAPIView):
