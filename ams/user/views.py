@@ -8,8 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from core.models import User
 
-from user.serializers import UserSerializer, AuthTokenSerializer,\
-    UserDetailSerializer
+from user.serializers import UserSerializer, AuthTokenSerializer
 
 from user import serializers
 

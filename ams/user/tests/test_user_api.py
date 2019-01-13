@@ -38,7 +38,7 @@ class Public_user_ApiTest(TestCase):
         res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        user = get_user_model().objects.get(**res.data)
+        user = get_user_model().objects.get(email=res.data['email'])
         self.assertTrue(user.check_password(payload['password']))
         self.assertNotIn('password', res.data)
 
@@ -87,7 +87,8 @@ class Public_user_ApiTest(TestCase):
             'email': 'atletica@javas.com',
             'password': 'chupa xv',
             'cpf': '12345678',
-            'date_of_birth': '2012-05-7'
+            'date_of_birth': '2012-05-7',
+            'is_staff': '1',
         }
         create_user(**payload)
         res = self.client.post(TOKEN_URL, payload)
@@ -97,8 +98,12 @@ class Public_user_ApiTest(TestCase):
 
     def test_create_token_invalid_credentials(self):
         """Test that token is not created if invalid creadentials are given"""
-        create_user(email='atletica@javas.com', password='javas e foda',
-                    cpf='12345678', date_of_birth='2012-05-7')
+        create_user(
+            email='atletica@javas.com',
+            password='javas e foda',
+            cpf='12345678',
+            date_of_birth='2012-05-7'
+        )
         payload = {
             'email': 'atletica@javas.com',
             'password': 'chupa xv'

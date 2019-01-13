@@ -58,17 +58,21 @@ class AuthTokenSerializer(serializers.Serializer):
         email = attrs.get('email')
         password = attrs.get('password')
 
-        is_staff = User.objects.values('is_staff').get(email=email)
-
         user = authenticate(
             request=self.context.get('request'),
             username=email,
             password=password,
         )
 
-        if not user or not is_staff['is_staff']:
+        if not user:
             msg = _('Unable to authenticate with provided credentials')
             raise serializers.ValidationError(msg, code='authorization')
+        else:
+            is_staff = User.objects.values('is_staff').get(email=email)
+
+            if not is_staff['is_staff']:
+                msg = _('Unable to authenticate with provided credentials')
+                raise serializers.ValidationError(msg, code='authorization')
 
         attrs['user'] = user
         return attrs
