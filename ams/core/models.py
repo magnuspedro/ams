@@ -1,6 +1,8 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
+
 
 # from django.conf import settings
 
@@ -57,12 +59,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.name
 
 
-# class Team(models.Model):
-#     """Create and save new team"""
-#     users = models.ManyToManyField('User')
-#     modalities = models.ManyToManyField('Modality')
-
-
 class Modality(models.Model):
     """Create and save new modality"""
     name = models.CharField(max_length=255)
@@ -83,12 +79,6 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-
-
-# class Competition(models.Model):
-#     """Create and save Competition"""
-#     events = models.ManyToManyField('Event')
-#     modalities = models.ManyToManyField('Modality')
 
 
 class Product(models.Model):
@@ -112,3 +102,43 @@ class Bought(models.Model):
 
     def __str__(self):
         return self.price
+
+
+class Voucher(models.Model):
+    """Create and save Model"""
+    price = models.FloatField()
+    amount = models.IntegerField()
+    lot = models.IntegerField()
+    event = models.ForeignKey('Event', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.price)
+
+
+class Transaction(models.Model):
+    """Create a intermediate table for sale and product"""
+    amount = models.FloatField()
+    sale = models.ForeignKey('Sale', on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+
+
+class Packet(models.Model):
+    """Create a intermadiate table for sale and voucher"""
+    amount = models.FloatField()
+    sale = models.ForeignKey('Sale', on_delete=models.CASCADE)
+    voucher = models.ForeignKey('Voucher', on_delete=models.CASCADE)
+
+
+class Sale(models.Model):
+    """Create and save sales"""
+    products = models.ManyToManyField('Product', through='Transaction')
+    vouchers = models.ManyToManyField('Voucher', through='Packet')
+    value = models.FloatField(default=0)
+    discount = models.FloatField()
+    taxes = models.FloatField()
+    date = models.DateTimeField(auto_now=True)
+    empl = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='empl')
+    buyer = models.ForeignKey('User', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.value)

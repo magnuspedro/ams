@@ -162,3 +162,20 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(bought), bought.price)
+
+    def test_voucher_str(self):
+        """Test the voucher string representation"""
+        event = models.Event.objects.create(
+            name='JOIA',
+            start='2018-10-10',
+            end='2018-11-11',
+            price=10.00,
+        )
+        voucher = models.Voucher.objects.create(
+            price='50.00',
+            amount='300',
+            lot='1',
+            event=event
+        )
+
+        self.assertEqual(str(voucher), voucher.price)

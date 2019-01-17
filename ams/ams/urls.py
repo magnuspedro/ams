@@ -22,4 +22,7 @@ urlpatterns = [
     path('api/modality/', include('modality.urls')),
     path('api/event/', include('event.urls')),
     path('api/product/', include('product.urls')),
+    path('api/voucher/', include('voucher.urls')),
+    path('api/ticket/', include('ticket.urls')),
+    path('api/sale/', include('sale.urls')),
 ]

@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'modality',
     'event',
     'product',
+    'voucher',
+    'ticket',
+    'sale',
 ]
 
 MIDDLEWARE = [

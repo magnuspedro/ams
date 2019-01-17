@@ -16,7 +16,5 @@ class EventSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
     # def to_representation(self, instance):
-
-
-class EventDetailSerializer(EventSerializer):
-    modalities = ModalitySerializer(many=True, read_only=True)
+    #     self.fields['modalities'] = ModalitySerializer(read_only=True)
+    #     return super(EventSerializer, self).to_representation(instance)

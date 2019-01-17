@@ -1,13 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from modality import views
+from voucher import views
 
 
 router = DefaultRouter()
-router.register('', views.ModalityViewSet)
+router.register('', views.VoucherViewSet)
 
-app_name = 'modality'
+app_name = 'voucher'
 
 urlpatterns = [
     path('', include(router.urls))

@@ -21,7 +21,7 @@ class EventViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         """Retrun appropriated serializer class"""
         if self.action == 'retrieve':
-            return serializers.EventDetailSerializer
+            return serializers.EventSerializer
 
         return self.serializer_class
 
