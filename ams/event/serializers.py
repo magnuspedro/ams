@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from core.models import Event, Modality
-from modality.serializers import ModalitySerializer
+# from modality.serializers import ModalitySerializer
 
 
 class EventSerializer(serializers.ModelSerializer):

@@ -137,7 +137,11 @@ class Sale(models.Model):
     discount = models.FloatField()
     taxes = models.FloatField()
     date = models.DateTimeField(auto_now=True)
-    empl = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='empl')
+    empl = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='empl'
+    )
     buyer = models.ForeignKey('User', on_delete=models.CASCADE)
 
     def __str__(self):

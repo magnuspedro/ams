@@ -15,13 +15,13 @@ class TicketViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = (
-            'id', 
+            'id',
             'code',
-            'price', 
-            'lot', 
-            'status', 
-            'date', 
-            'delegation', 
+            'price',
+            'lot',
+            'status',
+            'date',
+            'delegation',
             'event'
-            )
+        )
         read_only_fields = ('id',)
