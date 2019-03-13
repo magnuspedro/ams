@@ -1,5 +1,5 @@
 FROM python:3.7-alpine
-MAINTAINER Pedro Magnus and Matheus Roberto
+LABEL maintainer="Pedro Magnus and Matheus Roberto"
 
 
 ENV PYTHONUNBUFFERED 1
